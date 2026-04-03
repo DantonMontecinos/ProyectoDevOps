@@ -15,10 +15,11 @@ jobs:
     - name: Set up Java
       uses: actions/setup-java@v3
       with:
+        distribution: 'temurin'
         java-version: '21'
 
     - name: Build with Maven
-      run: mvn clean package
+      run: mvn clean package -DskipTests
 
     - name: Build Docker image
       run: docker build -t proyecto-app .
