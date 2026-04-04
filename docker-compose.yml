@@ -5,6 +5,7 @@ services:
   db:
     image: mysql:8
     container_name: mysql-db
+    restart: always
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: tickets_db
@@ -12,10 +13,13 @@ services:
       - "3306:3306"
     networks:
       - app-network
+    volumes:
+      - mysql_data:/var/lib/mysql
 
   app:
     build: .
     container_name: proyecto-app
+    restart: always
     ports:
       - "8080:8080"
     depends_on:
@@ -25,3 +29,6 @@ services:
 
 networks:
   app-network:
+
+volumes:
+  mysql_data:
