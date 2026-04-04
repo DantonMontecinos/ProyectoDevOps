@@ -23,3 +23,15 @@ jobs:
 
     - name: Build Docker image
       run: docker build -t proyecto-app .
+
+    - name: Deploy via SSH
+      uses: appleboy/ssh-action@v0.1.10
+      with:
+        host: ${{ secrets.SSH_HOST }}
+        username: ${{ secrets.SSH_USER }}
+        key: ${{ secrets.SSH_KEY }}
+        script: |
+          cd ~/proyecto
+          git pull
+          docker compose down
+          docker compose up -d --build
